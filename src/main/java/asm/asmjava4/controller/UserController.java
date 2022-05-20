@@ -5,7 +5,9 @@
 package asm.asmjava4.controller;
 
 import asm.asmjava4.dao.CategoryDAO;
+import asm.asmjava4.dao.UserDAO;
 import asm.asmjava4.model.Category;
+import asm.asmjava4.model.User;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,40 +18,36 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import utils.PasswordHelper;
 
 /**
  *
  * @author PC
  */
 @RestController
-@CrossOrigin(origins="*")
-public class CategoryController {
+@CrossOrigin(origins = "*")
+public class UserController {
 
     @Autowired
-    private CategoryDAO categoryDAO;
+    private UserDAO userDAO;
 
-    @GetMapping("/categories")
-    public List<Category> getListCategory() {
-        return categoryDAO.getAll();
+    @PostMapping("login")
+    public User userLogin(@RequestBody User user) {
+        String password_hash = PasswordHelper.encrypt(user.getPassword());
+        user.setPassword(password_hash);
+        return userDAO.login(user);
     }
 
-    @GetMapping("/category/{id}")
-    public Category getCategoryById(@PathVariable int id) {
-        return categoryDAO.getById(id);
+    @PostMapping("/register")
+    public User userRegister(@RequestBody User user) {
+        String password_hash = PasswordHelper.encrypt(user.getPassword());
+        user.setPassword(password_hash);
+        return userDAO.add(user);
     }
 
-    @PostMapping("category/add")
-    public String saveCategory(@RequestBody Category cate) {
-        return categoryDAO.add(cate) + "Add Successfully!";
+    @PutMapping("/user/update/{id}")
+    public User userUpdate(@RequestBody User user, @PathVariable int id) {
+        return userDAO.update(user, id);
     }
 
-    @PutMapping("category/update/{id}")
-    public String updateCategory(@RequestBody Category cate, @PathVariable int id) {
-        return categoryDAO.update(cate, id) + "Update Successfully!";
-    }
-
-    @DeleteMapping("category/delete/{id}")
-    public String deleteCategory( @PathVariable int id) {
-        return categoryDAO.delete(id) + "Delete Successfully";
-    }
 }

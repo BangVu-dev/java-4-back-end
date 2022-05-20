@@ -4,18 +4,18 @@
  */
 package asm.asmjava4.dao;
 
-import asm.asmjava4.model.Category;
+import asm.asmjava4.model.Product;
+import asm.asmjava4.model.ProductWithDetail;
 import java.util.List;
 
 /**
  *
  * @author PC
  */
-public interface CategoryDAO {
-   int add(Category cate);
-   int update(Category cate, int id);
+public interface ProductDAO {
+   int add(Product product);
+   int update(Product product, int id);
    int delete (int id);
-   List<Category> getAll(); 
-   Category getById(int id);
-    
+   List<ProductWithDetail> getAll(); 
+   Product getById(int id);    
 }

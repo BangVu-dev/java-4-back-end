@@ -15,9 +15,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
-    Integer categoryId;
-    String categoryName;
+public class Product {
+    Integer productId;
     String image;
+    String productName;    
+    Double price;
+    Integer categoryId;
     String description;
 }

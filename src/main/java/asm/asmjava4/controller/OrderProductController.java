@@ -5,7 +5,13 @@
 package asm.asmjava4.controller;
 
 import asm.asmjava4.dao.CategoryDAO;
+import asm.asmjava4.dao.OrderDAO;
+import asm.asmjava4.dao.OrderProductDAO;
+import asm.asmjava4.dao.UserDAO;
 import asm.asmjava4.model.Category;
+import asm.asmjava4.model.Order;
+import asm.asmjava4.model.OrderProduct;
+import asm.asmjava4.model.User;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,33 +29,14 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @CrossOrigin(origins="*")
-public class CategoryController {
+public class OrderProductController {
 
     @Autowired
-    private CategoryDAO categoryDAO;
-
-    @GetMapping("/categories")
-    public List<Category> getListCategory() {
-        return categoryDAO.getAll();
+    private OrderProductDAO orderProductDAO;  
+    
+    @PostMapping("cart/add")
+    public String addToCart(@RequestBody OrderProduct orderProduct) {
+        return orderProductDAO.addtoCart(orderProduct) + "Add to cart successfully!";
     }
-
-    @GetMapping("/category/{id}")
-    public Category getCategoryById(@PathVariable int id) {
-        return categoryDAO.getById(id);
-    }
-
-    @PostMapping("category/add")
-    public String saveCategory(@RequestBody Category cate) {
-        return categoryDAO.add(cate) + "Add Successfully!";
-    }
-
-    @PutMapping("category/update/{id}")
-    public String updateCategory(@RequestBody Category cate, @PathVariable int id) {
-        return categoryDAO.update(cate, id) + "Update Successfully!";
-    }
-
-    @DeleteMapping("category/delete/{id}")
-    public String deleteCategory( @PathVariable int id) {
-        return categoryDAO.delete(id) + "Delete Successfully";
-    }
+  
 }

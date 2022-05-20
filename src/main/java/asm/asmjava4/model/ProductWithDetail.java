@@ -15,9 +15,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
-    Integer categoryId;
+public class ProductWithDetail extends Product {
     String categoryName;
-    String image;
-    String description;
 }

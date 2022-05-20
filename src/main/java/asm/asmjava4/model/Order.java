@@ -4,6 +4,7 @@
  */
 package asm.asmjava4.model;
 
+import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,9 +16,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
-    Integer categoryId;
-    String categoryName;
-    String image;
-    String description;
+public class Order {
+    Double orderId;
+    Integer userId;
+    Timestamp createdAt;
+    String orderStatus;
+    String fullName;
+    String phoneNumber;
+    String email;
+    String postCode;
+    String address;
+    String message;
 }

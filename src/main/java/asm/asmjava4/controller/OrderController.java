@@ -5,8 +5,16 @@
 package asm.asmjava4.controller;
 
 import asm.asmjava4.dao.CategoryDAO;
+import asm.asmjava4.dao.OrderDAO;
+import asm.asmjava4.dao.UserDAO;
 import asm.asmjava4.model.Category;
+import asm.asmjava4.model.Order;
+import asm.asmjava4.model.OrderWithDetail;
+import asm.asmjava4.model.User;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+import static org.apache.tomcat.jni.User.username;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,40 +24,36 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import utils.SendMail;
 
 /**
  *
  * @author PC
  */
 @RestController
-@CrossOrigin(origins="*")
-public class CategoryController {
+@CrossOrigin(origins = "*")
+public class OrderController {
 
     @Autowired
-    private CategoryDAO categoryDAO;
+    private OrderDAO orderDAO;
 
-    @GetMapping("/categories")
-    public List<Category> getListCategory() {
-        return categoryDAO.getAll();
+    @PostMapping("/order/checkout")
+    public Order checkOut(@RequestBody Order order) {
+        Date date = new Date();
+        Timestamp timestamp2 = new Timestamp(date.getTime());
+        order.setCreatedAt(timestamp2);
+        try {
+            SendMail.sendEmail(order.getEmail());
+            return orderDAO.add(order);
+        } catch (Exception e) {
+            return null;
+        }
+        
     }
 
-    @GetMapping("/category/{id}")
-    public Category getCategoryById(@PathVariable int id) {
-        return categoryDAO.getById(id);
+    @GetMapping("/orders/list")
+    public List<OrderWithDetail> getOrderList() {
+        return orderDAO.getOrderList();
     }
 
-    @PostMapping("category/add")
-    public String saveCategory(@RequestBody Category cate) {
-        return categoryDAO.add(cate) + "Add Successfully!";
-    }
-
-    @PutMapping("category/update/{id}")
-    public String updateCategory(@RequestBody Category cate, @PathVariable int id) {
-        return categoryDAO.update(cate, id) + "Update Successfully!";
-    }
-
-    @DeleteMapping("category/delete/{id}")
-    public String deleteCategory( @PathVariable int id) {
-        return categoryDAO.delete(id) + "Delete Successfully";
-    }
 }

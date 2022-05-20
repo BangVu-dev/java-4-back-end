@@ -15,9 +15,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
-    Integer categoryId;
-    String categoryName;
-    String image;
-    String description;
+public class User {
+    Integer userId;
+    String userName;
+    String password;
+    String email;
+    String role;
 }

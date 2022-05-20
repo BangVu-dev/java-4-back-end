@@ -5,7 +5,9 @@
 package asm.asmjava4.controller;
 
 import asm.asmjava4.dao.CategoryDAO;
-import asm.asmjava4.model.Category;
+import asm.asmjava4.dao.ProductDAO;
+import asm.asmjava4.model.Product;
+import asm.asmjava4.model.ProductWithDetail;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,33 +25,33 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @CrossOrigin(origins="*")
-public class CategoryController {
+public class ProductController {
 
     @Autowired
-    private CategoryDAO categoryDAO;
+    private ProductDAO productDAO;
 
-    @GetMapping("/categories")
-    public List<Category> getListCategory() {
-        return categoryDAO.getAll();
+    @GetMapping("/products")
+    public List<ProductWithDetail> getListProduct() {
+        return productDAO.getAll();
     }
 
-    @GetMapping("/category/{id}")
-    public Category getCategoryById(@PathVariable int id) {
-        return categoryDAO.getById(id);
+    @GetMapping("/product/{id}")
+    public Product getProductById(@PathVariable int id) {
+        return productDAO.getById(id);
     }
 
-    @PostMapping("category/add")
-    public String saveCategory(@RequestBody Category cate) {
-        return categoryDAO.add(cate) + "Add Successfully!";
+    @PostMapping("product/add")
+    public String addProduct(@RequestBody Product product) {
+        return productDAO.add(product) + "Add Successfully!";
     }
 
-    @PutMapping("category/update/{id}")
-    public String updateCategory(@RequestBody Category cate, @PathVariable int id) {
-        return categoryDAO.update(cate, id) + "Update Successfully!";
+    @PutMapping("product/update/{id}")
+    public String updateProduct(@RequestBody Product product, @PathVariable int id) {
+        return productDAO.update(product, id) + "Update Successfully!";
     }
 
-    @DeleteMapping("category/delete/{id}")
-    public String deleteCategory( @PathVariable int id) {
-        return categoryDAO.delete(id) + "Delete Successfully";
+    @DeleteMapping("product/delete/{id}")
+    public String deleteProduct(@PathVariable int id) {
+        return productDAO.delete(id) + "Delete Successfully";
     }
 }
