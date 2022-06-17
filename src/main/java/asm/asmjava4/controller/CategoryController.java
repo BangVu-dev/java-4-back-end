@@ -52,4 +52,9 @@ public class CategoryController {
     public String deleteCategory( @PathVariable int id) {
         return categoryDAO.delete(id) + "Delete Successfully";
     }
+    
+    @GetMapping("/category/search/{name}")
+    public List<Category> searchByName(@PathVariable String name) {
+        return categoryDAO.searchByName(name);
+    }
 }

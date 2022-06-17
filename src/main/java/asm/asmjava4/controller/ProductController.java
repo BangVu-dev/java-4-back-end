@@ -54,4 +54,9 @@ public class ProductController {
     public String deleteProduct(@PathVariable int id) {
         return productDAO.delete(id) + "Delete Successfully";
     }
+    
+    @GetMapping("products/category/{catId}")
+    public List<Product> getListProductWithCatId(@PathVariable int catId) {
+        return productDAO.getAllWithCatId(catId);
+    }
 }

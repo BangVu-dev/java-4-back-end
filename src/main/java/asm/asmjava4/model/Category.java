@@ -4,6 +4,7 @@
  */
 package asm.asmjava4.model;
 
+import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,5 +20,5 @@ public class Category {
     Integer categoryId;
     String categoryName;
     String image;
-    String description;
+    String description;    
 }

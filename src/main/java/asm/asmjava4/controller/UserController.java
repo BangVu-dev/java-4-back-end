@@ -31,6 +31,15 @@ public class UserController {
     @Autowired
     private UserDAO userDAO;
 
+    @GetMapping("/users")
+    public List<User> getListUser() {        
+        List<User> user = userDAO.getAll();
+        for (int i = 0; i < user.size(); i++) {
+            user.get(i).setPassword(PasswordHelper.decrypt(user.get(i).getPassword()));
+        }
+        return user;
+    }
+
     @PostMapping("login")
     public User userLogin(@RequestBody User user) {
         String password_hash = PasswordHelper.encrypt(user.getPassword());
@@ -48,6 +57,30 @@ public class UserController {
     @PutMapping("/user/update/{id}")
     public User userUpdate(@RequestBody User user, @PathVariable int id) {
         return userDAO.update(user, id);
+    }
+
+    @PostMapping("/user/add")
+    public User addAccount(@RequestBody User user) {
+        String password_hash = PasswordHelper.encrypt(user.getPassword());
+        user.setPassword(password_hash);
+        return userDAO.add(user);
+    }
+
+    @DeleteMapping("user/delete/{id}")
+    public String deleteAccount(@PathVariable int id) {
+        return userDAO.delete(id) + "Delete Successfully";
+    }
+
+    @PutMapping("/account/update/{id}")
+    public User accountUpdate(@RequestBody User user, @PathVariable int id) {
+        String password_hash = PasswordHelper.encrypt(user.getPassword());
+        user.setPassword(password_hash);
+        return userDAO.updateAccount(user, id);
+    }
+
+    @GetMapping("/user/reset/password/{email}")
+    public int resetPasswordSendMail(@PathVariable String email) {
+        return userDAO.sendPassword(email);
     }
 
 }

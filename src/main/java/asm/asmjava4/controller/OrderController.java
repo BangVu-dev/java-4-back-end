@@ -12,6 +12,7 @@ import asm.asmjava4.model.Order;
 import asm.asmjava4.model.OrderWithDetail;
 import asm.asmjava4.model.User;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 import static org.apache.tomcat.jni.User.username;
@@ -42,18 +43,21 @@ public class OrderController {
         Date date = new Date();
         Timestamp timestamp2 = new Timestamp(date.getTime());
         order.setCreatedAt(timestamp2);
+
+        DecimalFormat df = new DecimalFormat("#");
+        df.setMaximumFractionDigits(0);
         try {
-            SendMail.sendEmail(order.getEmail());
+            SendMail.sendEmailWhenOrder(order.getEmail(), String.valueOf(df.format(order.getOrderId())));
             return orderDAO.add(order);
         } catch (Exception e) {
             return null;
         }
-        
+
     }
 
-    @GetMapping("/orders/list")
-    public List<OrderWithDetail> getOrderList() {
-        return orderDAO.getOrderList();
+    @GetMapping("/orders/list/{userId}")
+    public List<OrderWithDetail> getOrderList(@PathVariable int userId) {
+        return orderDAO.getOrderList(userId);
     }
 
 }

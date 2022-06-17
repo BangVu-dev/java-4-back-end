@@ -17,5 +17,6 @@ public interface ProductDAO {
    int update(Product product, int id);
    int delete (int id);
    List<ProductWithDetail> getAll(); 
-   Product getById(int id);    
+   Product getById(int id);
+   List<Product> getAllWithCatId(int catId);
 }

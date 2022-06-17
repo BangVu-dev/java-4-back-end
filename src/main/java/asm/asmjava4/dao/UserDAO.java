@@ -17,5 +17,10 @@ public interface UserDAO {
 //   List<ProductWithDetail> getAll();
    User login(User user);
    User add(User user);
+   User addAccount(User user);
    User update(User user, int id);
+   List<User> getAll();
+   int delete (int id);
+   User updateAccount(User user, int id);
+   int sendPassword(String email);
 }

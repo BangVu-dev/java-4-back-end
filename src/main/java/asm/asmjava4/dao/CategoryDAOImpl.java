@@ -46,4 +46,9 @@ public class CategoryDAOImpl implements CategoryDAO {
         return jdbcTemplate.queryForObject("SELECT * FROM category where categoryId=?", new BeanPropertyRowMapper<Category>(Category.class), id);
     }
 
+    @Override
+    public List<Category> searchByName(String name) {
+        return jdbcTemplate.query("select * from category where categoryName like '%"+name+"%'", new BeanPropertyRowMapper<Category>(Category.class));
+    }
+
 }

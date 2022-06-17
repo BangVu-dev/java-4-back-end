@@ -52,5 +52,10 @@ public class ProductDAOImpl implements ProductDAO {
     public Product getById(int id) {
         return jdbcTemplate.queryForObject("SELECT * FROM product where productId=?", new BeanPropertyRowMapper<Product>(Product.class), id);
     }
+
+    @Override
+    public List<Product> getAllWithCatId(int catId) {
+       return jdbcTemplate.query("select * from product where categoryId = ?", new BeanPropertyRowMapper<Product>(Product.class), catId);
+    }
     
 }

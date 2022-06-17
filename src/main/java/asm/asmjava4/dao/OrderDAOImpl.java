@@ -26,9 +26,9 @@ public class OrderDAOImpl implements OrderDAO {
     JdbcTemplate jdbcTemplate;
     
     @Override
-    public List<OrderWithDetail> getOrderList() {
-        return jdbcTemplate.query("SELECT * FROM orders as o join orderproduct as op on o.orderId = op.orderId ORDER BY o.orderId DESC", 
-                new BeanPropertyRowMapper<OrderWithDetail>(OrderWithDetail.class));
+    public List<OrderWithDetail> getOrderList(int userId) {
+        return jdbcTemplate.query("SELECT * FROM orders as o join orderproduct as op on o.orderId = op.orderId where o.userId = ? ORDER BY o.orderId DESC", 
+                new BeanPropertyRowMapper<OrderWithDetail>(OrderWithDetail.class), userId);
     }
     
     @Override

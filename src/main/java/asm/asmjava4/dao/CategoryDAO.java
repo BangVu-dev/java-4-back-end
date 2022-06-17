@@ -17,5 +17,5 @@ public interface CategoryDAO {
    int delete (int id);
    List<Category> getAll(); 
    Category getById(int id);
-    
+   List<Category> searchByName(String name);
 }

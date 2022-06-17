@@ -14,9 +14,7 @@ import java.util.List;
  * @author PC
  */
 public interface OrderDAO {
-//   int update(Product product, int id);
-//   int delete (int id);
-    List<OrderWithDetail> getOrderList();
+    List<OrderWithDetail> getOrderList(int userId);
     Order orderList(Order order);
     Order add(Order order);
 }
